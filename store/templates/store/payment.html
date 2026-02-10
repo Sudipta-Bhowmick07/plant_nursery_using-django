@@ -1,0 +1,17 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<div class="container mt-5 text-center">
+  <h2>Online Payment</h2>
+  <p>Order #{{ order.id }}</p>
+  <h3>Total: ₹{{ order.total }}</h3>
+
+  <form method="post" action="{% url 'order_success' order.id %}">
+    {% csrf_token %}
+    <button class="btn btn-success btn-lg mt-3">
+      Pay Now (Demo)
+    </button>
+  </form>
+</div>
+
+{% endblock %}

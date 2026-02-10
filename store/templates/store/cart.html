@@ -1,0 +1,69 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<h2 class="mb-4">🛒 Your Cart</h2>
+
+{% if items %}
+
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th>Plant</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in items %}
+    <tr>
+
+      <!-- PLANT NAME -->
+      <td>
+        <strong>{{ item.plant.name }}</strong>
+      </td>
+
+      <!-- PRICE -->
+      <td>₹{{ item.plant.price }}</td>
+
+      <!-- QTY -->
+      <td>{{ item.quantity }}</td>
+
+      <!-- SUBTOTAL (FIXED) -->
+      <td>
+        ₹{{ item.plant.price }} × {{ item.quantity }}
+        <br>
+        <strong>₹{{ item.subtotal }}</strong>
+      </td>
+
+      <!-- REMOVE -->
+      <td>
+        <form method="post" action="{% url 'remove_from_cart' item.plant.id %}">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-danger">Remove</button>
+        </form>
+      </td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<div class="text-end">
+  <h4>Total: ₹{{ total }}</h4>
+
+  <a href="/checkout/" class="btn btn-success btn-lg mt-2">
+    Proceed to Checkout
+  </a>
+</div>
+
+{% else %}
+  <div class="text-center mt-5">
+    <h4>Your cart is empty</h4>
+    <a href="/" class="btn btn-success mt-3">Shop Plants</a>
+  </div>
+{% endif %}
+
+{% endblock %}

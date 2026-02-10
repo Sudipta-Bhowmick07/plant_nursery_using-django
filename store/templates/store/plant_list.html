@@ -1,0 +1,74 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Welcome to Plant Nursery 🌱</h1>
+    <p class="col-md-8 fs-5">
+      Discover beautiful indoor and outdoor plants to brighten your home and garden.
+    </p>
+    <a href="#plants" class="btn btn-success btn-lg">Shop Now</a>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<h3 class="mb-3">Categories</h3>
+<a href="/" class="me-2">All</a>
+{% for c in categories %}
+  <a href="?category={{ c.id }}" class="me-2">{{ c.name }}</a>
+{% endfor %}
+
+<hr>
+
+<!-- PLANTS GRID -->
+<div id="plants" class="container mt-4">
+  <div class="row">
+
+    {% for plant in plants %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">   <!-- 4 per row -->
+      <div class="card h-100 shadow-sm border-0 product-card">
+
+        {% if plant.image %}
+        <img src="{{ plant.image.url }}" 
+             class="card-img-top" 
+             style="height:220px; object-fit:cover;">
+        {% endif %}
+
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <a href="{% url 'plant_detail' plant.id %}" 
+               class="text-dark text-decoration-none">
+               {{ plant.name }}
+            </a>
+          </h5>
+
+          <p class="card-text text-muted small">
+            {{ plant.description|truncatewords:12 }}
+          </p>
+
+          <div class="mt-auto">
+            <span class="badge bg-success fs-6">₹{{ plant.price }}</span>
+
+            {% if plant.stock == 0 %}
+              <span class="badge bg-danger ms-2">Out of stock</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="card-footer bg-white border-0 text-center">
+          <a href="{% url 'plant_detail' plant.id %}" 
+             class="btn btn-success w-100">
+             View Plant
+          </a>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}

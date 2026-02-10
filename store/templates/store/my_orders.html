@@ -1,0 +1,59 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>My Orders</h2>
+  <a href="/" class="btn btn-outline-success">Continue Shopping</a>
+</div>
+
+{% if orders %}
+
+<div class="row">
+{% for order in orders %}
+
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'order_detail' order_id=order.id %}" class="text-decoration-none">
+            Order #{{ order.id }}
+          </a>
+        </h5>
+
+        <p class="mb-1">
+          <strong>Total:</strong> ₹{{ order.total }}
+        </p>
+
+        <p class="text-muted small">
+          {{ order.created_at }}
+        </p>
+
+        <p>Status:
+  <span class="badge bg-info">
+    {{ order.status }}
+  </span>
+</p>
+
+        <a href="{% url 'order_detail' order_id=order.id %}" class="btn btn-success btn-sm mt-2">
+          View Details
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+{% endfor %}
+</div>
+
+{% else %}
+
+<div class="text-center mt-5">
+  <h4>No orders yet</h4>
+  <a href="/" class="btn btn-success mt-3">Start Shopping</a>
+</div>
+
+{% endif %}
+
+{% endblock %}

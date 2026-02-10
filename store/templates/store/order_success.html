@@ -1,0 +1,13 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="text-center mt-5">
+  <h1 class="text-success">🎉 Order Placed Successfully!</h1>
+  <p>Your order #{{ order.id }} has been placed.</p>
+
+  <a href="/" class="btn btn-success mt-3">Continue Shopping</a>
+  <a href="/my-orders/" class="btn btn-outline-secondary mt-3">View Orders</a>
+</div>
+
+{% endblock %}

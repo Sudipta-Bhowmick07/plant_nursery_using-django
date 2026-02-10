@@ -1,0 +1,66 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+  <!-- IMAGE -->
+  <div class="col-md-6">
+    {% if plant.image %}
+      <img src="{{ plant.image.url }}" class="img-fluid rounded shadow">
+    {% endif %}
+  </div>
+
+  <!-- DETAILS -->
+  <div class="col-md-6">
+    <h2>{{ plant.name }}</h2>
+
+    <p class="text-muted">{{ plant.description }}</p>
+
+    <h3 class="text-success">₹{{ plant.price }}</h3>
+
+    <p>
+      <strong>Stock:</strong>
+      {% if plant.stock > 0 %}
+        {{ plant.stock }} available
+      {% else %}
+        Out of stock
+      {% endif %}
+    </p>
+
+
+  {% if plant.stock > 0 %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label>Quantity:</label>
+    <input type="number" name="quantity" value="1" min="1"
+           max="{{ plant.stock }}" class="form-control" style="width:120px;">
+  </div>
+
+  <button class="btn btn-success btn-lg">
+    Add to Cart
+  </button>
+</form>
+
+{% else %}
+
+<button class="btn btn-secondary btn-lg" disabled>
+  Out of Stock
+</button>
+
+{% endif %}
+
+</form>
+
+
+    <br>
+    <a href="/" class="btn btn-outline-secondary">← Back to shop</a>
+
+  </div>
+
+</div>
+
+{% endblock %}
