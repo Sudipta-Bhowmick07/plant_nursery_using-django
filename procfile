@@ -1,1 +1,1 @@
-web: gunicorn nursery.wsgi
+web: gunicorn nursery.wsgi:application
